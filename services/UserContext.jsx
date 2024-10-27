@@ -12,15 +12,10 @@ export const UserProvider = ({ children }) => {
   const [userId, setUserId] = useState('');  // Novo estado para armazenar o ID do usuário
 
   useEffect(() => {
-    // Recupera o nome e o ID do usuário do localStorage quando o componente é montado
     const storedUserName = localStorage.getItem('userName');
-    const storedUserId = localStorage.getItem('userId');  // Recupera o ID do localStorage
-    if (storedUserName) {
-      setUserName(storedUserName);  // Define o nome do usuário com o valor salvo
-    }
-    if (storedUserId) {
-      setUserId(storedUserId);  // Define o ID do usuário com o valor salvo
-    }
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserName) setUserName(storedUserName);
+    if (storedUserId) setUserId(storedUserId);
   }, []);
 
   // Função para definir o nome e o ID do usuário após o login
@@ -40,7 +35,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ userName, userId, setUserName: login, setUserId, logout }}>
+    <UserContext.Provider value={{ userName, userId, login, setUserId, logout }}>
       {children}
     </UserContext.Provider>
   );

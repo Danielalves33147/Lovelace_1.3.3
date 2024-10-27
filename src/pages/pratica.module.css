@@ -50,6 +50,11 @@
     background-color: transparent;
 }
 
+.logoImage {
+    width: 230px; /* Ajuste a largura conforme necessário */
+    height: auto; /* Mantém a proporção */
+  }
+
 .sendAnswer {
     width: 200px;
     padding: 16px;

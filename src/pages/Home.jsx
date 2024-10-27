@@ -18,7 +18,7 @@ import { load, success_cad, success, fail, ainda_nao} from "../../services/alert
 
 //import { toast_load, toast_success_cad, toast_success, toast_fail} from "../../services/alert_toastfy.js"; // REACT TOASTFY
 
-import { sonner_load, sonner_success_cad, sonner_success, sonner_fail, sonner_ainda_nao} from "../../services/alert_toastfy.js"; // Sonner
+import { sonner_load, sonner_success_cad, sonner_success, sonner_fail, sonner_ainda_nao} from "../../services/alert_toast.js"; // Sonner
 
 import { useSignInWithEmailAndPassword, useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 

@@ -110,7 +110,9 @@ export default function Practice() {
         text: 'Você decidiu não salvar o PDF.',
         icon: 'info',
         showCancelButton: true,
-        confirmButtonText: 'Outra Atividade!',
+        confirmButtonColor: "#F21B3F",
+        iconColor : "#F21B3F",
+        confirmButtonText: 'Proximo texto.',
         cancelButtonText: 'Pagina Inicial!'
     }).then((result) => {
         if (result.isConfirmed) {
@@ -279,9 +281,9 @@ export default function Practice() {
 
   return (
     <div>
-      <header className={styles.loveLog}>
-        <h1>Lovelace</h1>
-      </header>
+        <header className={styles.loveLog}>
+          <img src="https://raw.githubusercontent.com/Danielalves33147/Imagens/main/TOKEN(4).png" alt="Lovelace Logo" className={styles.logoImage}/>
+        </header>
       <div className={styles.temporizador}>
         <h3 className={styles.timer}>{new Date(timer * 1000).toISOString().substr(11, 8)}</h3>
       </div>

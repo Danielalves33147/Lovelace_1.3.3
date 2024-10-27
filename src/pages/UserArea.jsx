@@ -12,18 +12,24 @@ import { load, success, fail, ainda_nao} from "../../services/alert.js";
 
 import { Toaster, toast } from 'sonner';
 
+import { useUser } from "../../services/UserContext.jsx";  // Importa o UserContext
+
+
 export default function UserArea() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [menuVisible, setMenuVisible] = useState(false);
 
+  const { login } = useUser();
   const storedUser  = JSON.parse(sessionStorage.getItem('user'));
 
   useEffect(() => {
     try {
         if (storedUser ) {
-            setUser (storedUser);
-            console.log(storedUser)
+            login(storedUser.name, storedUser.id);
+            console.log("STORED USERRRRRRRRR",storedUser);
+            console.log("ID LOCAL",storedUser.id);
+            console.log("NOME ",storedUser.name);
         } else {
             navigate("/");
         }
