@@ -27,6 +27,7 @@ export default function UserArea() {
     try {
         if (storedUser ) {
             login(storedUser.name, storedUser.id);
+            setUser(storedUser);
             console.log("STORED USERRRRRRRRR",storedUser);
             console.log("ID LOCAL",storedUser.id);
             console.log("NOME ",storedUser.name);
