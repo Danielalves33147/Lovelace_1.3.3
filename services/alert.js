@@ -4,7 +4,6 @@ let notificationCount = 0;
 import { sendPasswordResetEmail } from "firebase/auth";
 
 
-
 export function load(){
     Swal.fire({
         title: 'Carregando...',
@@ -62,78 +61,6 @@ export function fail(){
     toast: true
   });
 
-}
-
-export function pratica(navigate){
-  Swal.fire({
-      title: 'Iniciar Atividades?',
-      text: "Voce pode acessar uma pre definida ou criar uma sala personalizada, o que deseja?",
-      icon: 'warning',
-      iconColor: '#F21B3F',
-      background: 'white',
-      showCancelButton: true,
-      confirmButtonColor: '#F21B3F',
-      border: 'none',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Pré-definida',
-      cancelButtonText: 'Personalizada'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate('/Lovelace/practice');
-      } else {
-          Swal.fire({
-              title: 'Iniciando Atividade!',
-              text: "Voce pode criar uma sala, ou entrar em uma já existente!",
-              icon: 'warning',
-              iconColor: '#F21B3F',
-              background: 'white',
-              showCancelButton: true,
-              confirmButtonColor: '#F21B3F',
-              border: 'none',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Criar Sala',
-              cancelButtonText: 'Entrar'
-          }).then((result) => {
-          if (result.isConfirmed) {
-          navigate('/Lovelace/createactivity');
-          } else {
-          navigate('/Lovelace/accesscode');
-          }
-          })
-      }
-    })
-}
-
-export function dontSavePdf() {
-  const resContainer = document.getElementById("resultContainer");
-  resContainer.style.display="none";
-
-  Swal.fire({
-      title: 'Resultado não salvo!',
-      text: 'Você decidiu não salvar o PDF.',
-      icon: 'info',
-      showCancelButton: true,
-      confirmButtonText: 'Outra Atividade!',
-      cancelButtonText: 'Pagina Inicial!'
-  }).then((result) => {
-      if (result.isConfirmed) {
-          // Se o usuário quiser continuar, recarregue a página
-          window.location.reload(); // Recarregar a página
-      } else {
-          // Caso contrário, navegue para a página inicial
-          navigate('/Lovelace/tool');
-      }
-  });
-} 
-
-export function savePdf() {
-  generateInvoicePDF({
-    activityName: currentTitle || "Título", // Usa o título armazenado
-    score: Math.round(score),
-    level: rank,
-    timeSpent: new Date(timer * 1000).toISOString().substr(11, 8),
-    answers: answers  // Passando as respostas para a função
-  });
 }
 
 export function ainda_nao(){

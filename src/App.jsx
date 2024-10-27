@@ -8,7 +8,9 @@ import Profile from "./pages/Profile.jsx";
 import EditActivity from "./pages/EditActivity.jsx";
 import AccessActivity from "./pages/AccessActivity.jsx";
 import ActivityResponses from "./pages/ActivityResponses.jsx";
+import Practice from "./pages/pratica.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
+
 
 import { UserProvider } from '../services/UserContext.jsx';  // Importa o UserProvider pro Context
 
@@ -28,6 +30,7 @@ export default function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/ce" element={<FormActivity />} />
+              <Route path="/prt" element={<Practice />}/>
               <Route path="/a/:id" element={<Activity />} />
               <Route path="/ua" element={<UserArea />} />
               <Route path="/profile" element={<Profile />} />

@@ -14,7 +14,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 
 import { sendPasswordResetEmail } from "firebase/auth";
 
-import { load, success_cad, success, fail, ainda_nao, pratica} from "../../services/alert.js"; //Sweet Alert 2
+import { load, success_cad, success, fail, ainda_nao} from "../../services/alert.js"; //Sweet Alert 2
 
 //import { toast_load, toast_success_cad, toast_success, toast_fail} from "../../services/alert_toastfy.js"; // REACT TOASTFY
 
@@ -502,7 +502,7 @@ export default function Home() {
                   className={styles.icon}
                   onClick={(e) => {
                     e.preventDefault(); // Previne o comportamento padrão do link
-                    ainda_nao(); // Chama a função ainda_não
+                    sonner_ainda_nao(); // Chama a função ainda_não
                   }}
                 >
                   <FontAwesomeIcon icon={faGoogle} style={{ color: "#DB4437" }} />

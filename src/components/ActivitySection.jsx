@@ -4,7 +4,6 @@ import styles from './ActivitySection.module.css';
 import Dictionary from './Dictionary';
 
 import Swal from "sweetalert2";
-import {ainda_nao} from "../../services/alert.js";
 
 
 const ActivitySection = () => {
@@ -69,12 +68,32 @@ const ActivitySection = () => {
         }
     }, [inputVisible, accessCode]);
 
+    function pratica(){
+        Swal.fire({
+            title: 'Iniciar Atividades?',
+            text: "Uma atividade que o tempo influencia em sua pontuação.",
+            icon: 'warning',
+            iconColor: '#F21B3F',
+            background: 'white',
+            showCancelButton: false,
+            confirmButtonColor: '#F21B3F',
+            border: 'none',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iniciar',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              navigate('/prt');
+            }
+          })
+      }
+
+
     return (
         <section className={styles.activitySection}>
                 <section className={styles.predefinedActivities}>
                     <h2>Prática</h2>
                     <p>Experimente atividades pré-estabelecidas, desenvolvidas para aprimorar suas habilidades e reforçar conceitos essenciais, oferecendo uma prática estruturada e enriquecedora para seu aprendizado.</p>
-                    <button onClick={ainda_nao}><a>Go ahead</a></button>
+                    <button onClick={pratica}><a>Go ahead</a></button>
                 </section>
                 <section className={styles.customActivity}>
                     <h2>Atividade Personalizada</h2>
