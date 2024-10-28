@@ -190,9 +190,7 @@ export default function Home() {
   if (loadingLogin) {
     return; // Evita que o usuário envie a solicitação múltiplas vezes
   }
-
   setLoading(true); // Mostrando a indicação de loading
-
   try {
     sonner_load(); // Inicia a animação de loading
 
@@ -213,14 +211,12 @@ export default function Home() {
         name: userName,
         uid: user.uid // UID do Firebase
       };
-
       sessionStorage.setItem('user', JSON.stringify(userData));
-      setUserName(userName); // Atualiza o nome do usuário no contexto
-      sonner_success(); // Exibe mensagem de successo
       navigate('/ua'); // Redireciona para a próxima página
-      console.log("NOME: ", userName);
-      console.log("ID (local): ", localUserId);
-      console.log("UID (Firebase): ", user.uid);
+      sonner_success(); // Exibe mensagem de successo
+      // console.log("NOME: ", userName);
+      // console.log("ID (local): ", localUserId);
+      // console.log("UID (Firebase): ", user.uid);
     } else {
       setError("Erro ao obter dados do usuário. Tente novamente.");
       sonner_fail(); // Chama a função fail em caso de erro

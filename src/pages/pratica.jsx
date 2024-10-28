@@ -47,12 +47,12 @@ export default function Practice() {
             name: "A tool for english learning",
             address: "Camaçari / Bahia / Brasil",
             phone: "Plataforma desenvolvida em 2023",
-            email: "lovelace_suporte@hotmail.com",
-            email_1: "lovelace@hotmail.com",
+            email: "suporte@lovelace.com",
+            email_1: "contato@lovelace.com",
             website: "www.lovelace.com",
         },
         contact: {
-            label: `Aluno : ${userName}`,  // Usando o nome do usuário aqui
+            label: `Aluno(a) : ${userName}`,  // Usando o nome do usuário aqui
             name: clientAddress,
             address: clientAddress,
             phone: clientPhone,
