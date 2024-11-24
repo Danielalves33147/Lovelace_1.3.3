@@ -84,13 +84,13 @@ const submitResponses = (e) => {
     })
     .then(data => {
         console.log('Respostas enviadas:', data);
-        alert('Respostas submetidas com sucesso!');
+        toast.alert('Respostas submetidas com sucesso!');
         setTimeout(() => {
             navigate("/");
         }, 2000); 
     })
     .catch((err) => {
-        console.error('Erro ao enviar respostas:', err);
+        alert('Erro ao enviar respostas:', err);
         setError('Erro ao enviar suas respostas. Tente novamente.');
     });
 };

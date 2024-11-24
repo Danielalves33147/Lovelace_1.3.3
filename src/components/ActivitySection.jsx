@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 
 import db from "../../db.json";
 
+import { toast } from 'sonner'
 
 const ActivitySection = () => {
     const [accessCode, setAccessCode] = useState(''); 
@@ -93,11 +94,15 @@ const ActivitySection = () => {
           })
     }
    
-    function generateActivityPDF(activityId, userId) {
-        // Encontrar a atividade pelo activityId
-        const activity = db.activities.find(act => act.id === activityId);
+
+
+
+    function generateActivityPDF(activityAccessCode, userId) {
+        // Encontrar a atividade pelo código de acesso
+        const activity = db.activities.find(act => act.accessCode === activityAccessCode);
         if (!activity) {
-            console.error('Atividade não encontrada com o ID fornecido.');
+            console.error('Atividade não encontrada com o código de acesso fornecido.');
+            toast.warning('Atividade não encontrada com o código de acesso fornecido.');
             return;
         }
     
@@ -105,6 +110,7 @@ const ActivitySection = () => {
         const responses = db.responses.filter(resp => resp.activityId === activity.id);
         if (responses.length === 0) {
             console.error('Respostas não encontradas para a atividade fornecida.');
+            toast.warning('Respostas não encontradas para a atividade fornecida.');
             return;
         }
     
@@ -112,6 +118,7 @@ const ActivitySection = () => {
         const respondingUser = db.users.find(usr => usr.id === userId);
         if (!respondingUser) {
             console.error('Usuário não encontrado com o ID fornecido.');
+            toast.warning('Usuário não encontrado com o ID fornecido.');
             return;
         }
     
@@ -138,13 +145,11 @@ const ActivitySection = () => {
                 email: "suporte@lovelace.com",
             },
             contact: {
-                label: `Responsavel: ${respondingUser.name}`,
-                // name: respondingUser.name,
-                // phone: respondingUser.email,
+                label: `Responsável: ${respondingUser.name}`,
             },
             invoice: {
-                label: "Código da Atividade: ",
-                num: activityId,
+                label: "Código de Acesso: ",
+                num: `${activity.accessCode}`, // Atualizado para exibir o código de acesso
                 invDate: `Data de Impressão: ${formattedDate}`,
                 invGenDate: `Horário: ${formattedTime}`,
                 header: [
@@ -176,38 +181,37 @@ const ActivitySection = () => {
         // Criar uma nova janela para exibir o PDF
         const newWindow = window.open();
         newWindow.document.open();
-        newWindow.document.write(`
-            <iframe width='100%' height='100%' src='${pdfDataUri}'></iframe>
-        `);
-        newWindow.document.close();
-    
-        // Adicionar uma página em branco ao PDF
-        const pdfDoc = pdfObject.doc; // Obter o objeto PDF
-        pdfDoc.addPage(); // Adiciona uma nova página em branco
-    
-        // Atualiza a nova janela para incluir a versão com a página em branco
-        const updatedPdfDataUri = pdfDoc.output('datauristring');
-        
-        // Abrir nova janela para mostrar o PDF atualizado
-        newWindow.document.open();
-        newWindow.document.write(`
-            <iframe width='100%' height='100%' src='${updatedPdfDataUri}'></iframe>
-        `);
+        newWindow.document.write(`<iframe width='100%' height='100%' src='${pdfDataUri}'></iframe>`);
         newWindow.document.close();
     
         console.log("PDF criado com sucesso!", pdfObject);
     }
     
+    
 
-    function handleCreatePDF(activityId) {
-        if (!activityId) {
-            alert("Por favor, insira o ID da atividade.");
+    
+    function handleCreatePDFByAccessCode(accessCode) {
+        console.log("Atividades disponíveis no banco de dados:", db.activities);
+        console.log("Código de acesso recebido:", accessCode);
+    
+        if (!accessCode) {
+            toast.warning("Por favor, insira o código de acesso.");
             return;
         }
     
-        const userId = "08b6";  // ID local do usuário, substitua conforme necessário
-        generateActivityPDF(activityId, userId);
+        // Encontra a atividade pelo código de acesso
+        const activity = db.activities.find(act => act.accessCode === accessCode);
+        if (!activity) {
+            toast.error("Atividade não encontrada com o código de acesso fornecido.");
+            return;
+        }
+    
+        // Gera o PDF usando o `id` da atividade encontrada
+        const userId = "08b6"; // ID do usuário (ajuste conforme necessário)
+        generateActivityPDF(accessCode, userId); // Corrigido para passar o código de acesso
     }
+    
+
 
     return (
         <section className={styles.activitySection}>
@@ -226,16 +230,17 @@ const ActivitySection = () => {
 
 
 
-                        <section className={styles.customActivity}>
+                <section className={styles.customActivity}>
                     <h2>Documentos das Atividades</h2>
                     <p> Gere um documento PDF com os estudantes que responderam sua atividade.</p>
                     <input
                         type="text"
-                        placeholder="Insira o ID da atividade"
-                        onChange={(e) => setActivityId(e.target.value)}
+                        placeholder="Insira o Código de Acesso"
+                        onChange={(e) => setAccessCode(e.target.value)}
                     />
-                    <button onClick={() => handleCreatePDF(activityId)}>Criar</button>
+                    <button onClick={() => handleCreatePDFByAccessCode(accessCode)}>Criar</button>
                 </section>
+
 
 
 

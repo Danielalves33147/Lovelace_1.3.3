@@ -7,6 +7,8 @@ import styles from './FormActivity.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus} from '@fortawesome/free-solid-svg-icons';
 
+import Swal from "sweetalert2";
+
 // Gerar um código de acesso aleatório
 function generateAccessCode(length = 8) {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -105,22 +107,69 @@ function FormActivity({ activity = null }) {
         });
     };
 
-    const deleteActivity = (activityId) => {
-        if (window.confirm("Tem certeza que deseja excluir esta atividade?")) {
-            fetch(`http://localhost:4000/activities/${activityId}`, {
-                method: 'DELETE',
-            })
-            .then((resp) => {
-                if (!resp.ok) {
-                    throw new Error("Erro ao excluir a atividade.");
+    const deleteActivity = (activityId, navigate, activities, setActivities) => {
+        // Simulação de senha correta
+        const simulatedCorrectPassword = "senhaCorreta"; // Substitua por senha correta para fins de teste
+
+        Swal.fire({
+            title: 'Confirmação de Senha',
+            text: "Para confirmar a exclusão, insira sua senha:",
+            input: 'password',
+            inputAttributes: {
+                autocapitalize: 'off',
+                autocorrect: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonColor: "#F21B3F",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Confirmar",
+            cancelButtonText: "Cancelar",
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'Por favor, insira sua senha para confirmar.';
                 }
-                // Remover a atividade excluída da lista
-                setActivities(activities.filter(activity => activity.id !== activityId));
-                alert("Atividade excluída com sucesso!");
-            })
-            .catch((err) => console.error('Erro ao excluir atividade:', err));
-        }
-        activityId.preventDefault();
+            }
+        }).then((passwordResult) => {
+            if (passwordResult.isConfirmed) {
+                const enteredPassword = passwordResult.value;
+
+                // Verificar a senha inserida com a senha simulada
+                if (enteredPassword === simulatedCorrectPassword) {
+                    Swal.fire({
+                        title: "Tem certeza?",
+                        text: "Esta ação não pode ser desfeita e a atividade será excluída permanentemente.",
+                        icon: "warning",
+                        iconColor: "#F21B3F",
+                        showCancelButton: true,
+                        confirmButtonColor: "#F21B3F",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Sim, excluir!",
+                        cancelButtonText: "Cancelar"
+                    }).then((confirmResult) => {
+                        if (confirmResult.isConfirmed) {
+                            fetch(`http://localhost:4000/activities/${activityId}`, {
+                                method: 'DELETE',
+                            })
+                            .then((resp) => {
+                                if (!resp.ok) {
+                                    throw new Error("Erro ao excluir a atividade.");
+                                }
+                                setActivities(prevActivities => prevActivities.filter(activity => activity.id !== activityId));
+                                
+                                Swal.fire("Excluído!", "A atividade foi excluída com sucesso.", "success")
+                                    .then(() => navigate('/ua'));
+                            })
+                            .catch((err) => {
+                                console.error('Erro ao excluir atividade:', err);
+                                Swal.fire("Erro", "Houve um problema ao tentar excluir a atividade.", "error");
+                            });
+                        }
+                    });
+                } else {
+                    Swal.fire("Senha incorreta", "A senha fornecida está incorreta.", "error");
+                }
+            }
+        });
     };
 
     return (

@@ -48,7 +48,8 @@ function Activity() {
                 <h2>{activity.description}</h2>
                 <div className={styles.code_box}>
                     <div className={styles.code_text}>
-                        <h3>Código de Acesso: <span id='codigo'>{activity.accessCode}</span></h3>
+                    <h3>Código de Acesso: <span id='codigo'>{activity.accessCode}</span></h3>
+                    <h3>Id: <span id='id' >{activity.accessCode}</span></h3>
                     </div>
                     <button onClick={copiarCodigo} className={styles.copyButton}>
                     <FontAwesomeIcon 
